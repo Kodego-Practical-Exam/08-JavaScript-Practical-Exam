@@ -28,16 +28,13 @@ body {
 }
 
 #headline1 {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     width: 65%;
+    margin-right: 10rem;
 }
 
 #headline2 {
-    top: 27%;
-    left: 48%;
-    transform: translate(-50%, -50%);
+    margin-bottom: 30rem;
+    margin-left: 60rem;
     width: 60%;
 }
 
@@ -49,9 +46,8 @@ body {
 }
 
 #logo {
-    top: 17%;
-    left: 65%;
-    transform: translate(-50%, -50%);
+    top: -10%;
+    left: 15%;
     width: 25%;
 }
 
