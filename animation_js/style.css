@@ -1,0 +1,82 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    background-color: black;
+}
+
+#banner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url("./photos/background.png");
+    background-size: cover;
+    background-position: center;
+    width: 60%;
+    height: 100%;
+}
+
+#female-character {
+    top: 28%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+}
+
+#headline1 {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 65%;
+}
+
+#headline2 {
+    top: 27%;
+    left: 48%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+}
+
+#subheadline {
+    top: 52%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    width: 66%;
+}
+
+#logo {
+    top: 17%;
+    left: 65%;
+    transform: translate(-50%, -50%);
+    width: 25%;
+}
+
+#learn-more-btn {
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30%;
+}
+
+#replay-btn {
+    top: 83%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20%;
+}
+
+#female-character,
+#headline1,
+#headline2,
+#subheadline,
+#learn-more-btn,
+#logo,
+#replay-btn {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 1s, transform 1s;
+}

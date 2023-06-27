@@ -1,4 +1,4 @@
-let blocks = [2, 6, 8, 5];
+let blocks = [];
 
 function computeMaxJump(blocks) {
   let maxDistance = 0;
