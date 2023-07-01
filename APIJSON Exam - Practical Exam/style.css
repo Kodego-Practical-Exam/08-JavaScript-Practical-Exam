@@ -1,8 +1,10 @@
+html {
+    overflow: auto;
+}
 body {
     font-family: "Roboto", sans-serif;
-    padding-top: 2vh 0 3vh;
-
-    background-color: #7fd180; /* Coingecko green theme */
+    padding-top: 2vh;
+    background-color: #7fd180;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -10,13 +12,14 @@ body {
 }
 
 .search {
-    padding: 1rem;
+    padding-bottom: 1.2rem;
     margin: auto;
 }
+
 .search input {
-    width: 550px;
-    padding: 0.65rem 1.75rem;
-    font-size: large;
+    width: 700px;
+    padding: 0.9rem 1.75rem;
+    font-size: x-large;
     font-weight: 400;
     color: #3b6b3a;
     background-color: #d9e9d8c2;
@@ -33,15 +36,16 @@ body {
 }
 
 .list-item {
+    height: 18vh;
     display: flex;
     align-items: center;
     margin: 1rem 0;
 }
 
 .logo {
-    width: 40%;
-    height: 100%;
-    border: 3px solid #30602f9d; /* Darker border color based on background */
+    min-width: 25%;
+    min-height: 16vh;
+    border: 3px solid #30602f9d;
     background-color: #d9e9d8c2;
     border-radius: 4px;
     display: flex;
@@ -51,39 +55,51 @@ body {
 }
 
 .content {
-    width: 350px; /* Fixed width for the content div */
+    min-height: 25%;
+    width: 500px;
     border-radius: 4px;
-    border: 3px solid #cee4ccc2; /* Lighter border color based on background */
-    padding: 0.7rem;
-    background-color: #7fd180; /* Almost white background color */
-    margin-left: 1rem; /* Gap between logo and content */
+    border: 3px solid #cee4ccc2;
+    padding: 1.2rem;
+    background-color: #7fd180;
+    margin-left: 1rem;
 }
 
 .logo:last-child {
-    display: none; /* Hide the logo div in the last list item */
+    display: none;
 }
 
 h2 {
+    font-size: xx-large;
     color: #244624;
-    margin: 0;
+    margin: 5px;
 }
 
 p {
+    font-size: lxarge;
     color: #3b6b3a;
     font-weight: 400;
-    margin: 5px 0;
+    margin: 0 5px 7px;
 }
 
-/* Additional styling */
+.loading-text {
+    font-size: xx-large;
+    color: #3b6b3a;
+    font-weight: 400;
+    padding-top: 15vh;
+}
+
+.end-of-list {
+    font-size: xx-large;
+    color: #3b6b3a;
+    font-weight: 400;
+}
+
 #container {
     display: flex;
     justify-content: center;
-}
-
-#container > div {
-    margin-bottom: 10px;
+    overflow-y: auto; /* Enable scrolling */
 }
 
 #container > div:last-child {
-    margin-bottom: 0;
+    margin-bottom: 1vh;
 }
