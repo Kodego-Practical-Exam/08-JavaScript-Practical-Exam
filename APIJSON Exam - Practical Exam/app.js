@@ -24,58 +24,53 @@ function createDivAndDisplayData(data) {
   listDiv.className = 'scrollable-list';
 
   // Loop through the data and create the list items
-  for (const key in data) {
-    if (data.hasOwnProperty(key)) {
-      const item = data[key];
+  Object.keys(data).forEach(key => {
+    const item = data[key];
 
-      // Create the list item div
-      const listItem = document.createElement('div');
-      listItem.className = 'list-item';
+    // Create the list item div
+    const listItem = document.createElement('div');
+    listItem.className = 'list-item';
 
-      // Create the logo div (empty for now)
-      const logoDiv = document.createElement('div');
-      logoDiv.className = 'logo';
-
-      // Create the content div
-      const contentDiv = document.createElement('div');
-      contentDiv.className = 'content';
-
-      // Create the h2 element for the rate
-      const rateH2 = document.createElement('h2');
-      rateH2.textContent = `Rate = ${item.value}`;
-
-      // Create the first paragraph for the crypto name
-      const nameP = document.createElement('p');
-      nameP.textContent = `Crypto name: ${item.name}`;
-
-      // Create the second paragraph for the crypto unit
-      const unitP = document.createElement('p');
-      unitP.textContent = `Crypto unit: ${item.unit}`;
-
-      // Append the elements to the content div
-      contentDiv.appendChild(rateH2);
-      contentDiv.appendChild(nameP);
-      contentDiv.appendChild(unitP);
-
-      // Append the logo div and content div to the list item div
-      listItem.appendChild(logoDiv);
-      listItem.appendChild(contentDiv);
-
-      // Append the list item to the list div
-      listDiv.appendChild(listItem);
+    // Create the logo div
+    const logoDiv = document.createElement('div');
+    logoDiv.className = 'logo';
+    // Add the end of list text in the last item
+    if (key === 'sats') {
+      logoDiv.textContent = 'End of list';
     }
-  }
+
+    // Create the content div
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'content';
+
+    // Create the h2 element for the rate
+    const rateH2 = document.createElement('h2');
+    rateH2.textContent = `${key}: ${item.value}`;
+
+    // Create the first paragraph for the crypto name
+    const nameP = document.createElement('p');
+    nameP.textContent = `Crypto name: ${item.name}`;
+
+    // Create the second paragraph for the crypto unit
+    const unitP = document.createElement('p');
+    unitP.textContent = `Crypto unit: ${item.unit}`;
+
+    // Append the elements to the content div
+    contentDiv.appendChild(rateH2);
+    contentDiv.appendChild(nameP);
+    contentDiv.appendChild(unitP);
+
+    // Append the logo div and content div to the list item div
+    listItem.appendChild(logoDiv);
+    listItem.appendChild(contentDiv);
+
+    // Append the list item to the list div
+    listDiv.appendChild(listItem);
+  });
 
   // Remove the loading div
   container.removeChild(loadingDiv);
 
   // Append the list div to the container
   container.appendChild(listDiv);
-
-  // Create a div element for the end of list message
-  const endDiv = document.createElement('div');
-  endDiv.textContent = 'End of list';
-
-  // Append the end div to the container
-  container.appendChild(endDiv);
 }
