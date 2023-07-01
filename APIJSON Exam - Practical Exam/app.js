@@ -13,7 +13,6 @@ function createDivAndDisplayData(data) {
   listDiv.className = 'scrollable-list';
   let lastKey;
 
-  // Loop through the data and create the list items
   Object.keys(data).forEach(key => {
     const item = data[key];
     const listItem = document.createElement('div');
@@ -23,13 +22,8 @@ function createDivAndDisplayData(data) {
     const contentDiv = document.createElement('div');
     contentDiv.className = 'content';
     const rateH2 = document.createElement('h2');
-
-    // Round the value to 2 decimal places
     const roundedValue = item.value.toFixed(2);
-
-    // Format the value as a monetary value with commas
     const formattedValue = parseFloat(roundedValue).toLocaleString();
-
     rateH2.textContent = `${key}: ${formattedValue}`;
     const nameP = document.createElement('p');
     nameP.textContent = `Crypto name: ${item.name}`;
@@ -47,7 +41,6 @@ function createDivAndDisplayData(data) {
   container.removeChild(loadingDiv);
   container.appendChild(listDiv);
 
-  // Create the "End of List" list item
   const endOfListDiv = document.createElement('div');
   endOfListDiv.className = 'list-item end-of-list';
   endOfListDiv.textContent = 'End of List';
