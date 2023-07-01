@@ -44,7 +44,7 @@ body {
 
 .logo {
     min-width: 25%;
-    min-height: 16vh;
+    min-height: 15vh;
     border: 3px solid #30602f9d;
     background-color: #d9e9d8c2;
     border-radius: 4px;
@@ -59,7 +59,7 @@ body {
     width: 500px;
     border-radius: 4px;
     border: 3px solid #cee4ccc2;
-    padding: 1.2rem;
+    padding: 1rem;
     background-color: #7fd180;
     margin-left: 1rem;
 }
