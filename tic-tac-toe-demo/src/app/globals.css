@@ -35,7 +35,7 @@ body {
   text-align: center;
   margin: 20px;
   font-family: "Open Sans", sans-serif;
-  font-size: 18px;
+  font-size: 27px;
 }
 
 .board-row {
@@ -43,10 +43,10 @@ body {
 }
 
 .square {
-  width: 70px;
-  height: 70px;
+  width: 80px;
+  height: 80px;
   margin: 4px;
-  font-size: 32px;
+  font-size: 40px;
   text-align: center;
   background-color: #fff;
   border: 3px solid #999;
