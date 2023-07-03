@@ -44,7 +44,6 @@ function Board({ xIsNext, squares, onPlay }: BoardProps) {
 
   return (
     <>
-      <div className="status">{status}</div>
       <div className="board-row">
         <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
         <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
@@ -65,43 +64,37 @@ function Board({ xIsNext, squares, onPlay }: BoardProps) {
 }
 
 export default function Game() {
-  const [history, setHistory] = useState<Array<Array<string | null>>>([Array(9).fill(null)]);
-  const [currentMove, setCurrentMove] = useState(0);
-  const xIsNext = currentMove % 2 === 0;
-  const currentSquares = history[currentMove];
+  const [currentSquares, setCurrentSquares] = useState<Array<string | null>>(Array(9).fill(null));
+  const xIsNext = currentSquares.filter((s) => s === null).length % 2 === 0;
 
   function handlePlay(nextSquares: Array<string | null>) {
-    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
-    setHistory(nextHistory);
-    setCurrentMove(nextHistory.length - 1);
+    setCurrentSquares(nextSquares);
   }
 
-  function jumpTo(nextMove: number) {
-    setCurrentMove(nextMove);
+  function restartGame() {
+    setCurrentSquares(Array(9).fill(null));
   }
 
-  const moves = history.map((squares, move) => {
-    let description;
-    if (move > 0) {
-      description = 'Go to move #' + move;
-    } else {
-      description = 'Go to game start';
-    }
-    return (
-      <li key={move}>
-        <button onClick={() => jumpTo(move)}>{description}</button>
-      </li>
-    );
-  });
+  const winner = calculateWinner(currentSquares);
+  let status;
+  if (winner) {
+    status = 'Winner: ' + winner;
+  } else if (currentSquares.every((s) => s !== null)) {
+    status = 'Draw';
+  } else {
+    status = 'Next player: ' + (xIsNext ? 'X' : 'O');
+  }
 
   return (
     <div className="game">
+      <h1>Tic Tac Toe</h1>
       <div className="game-board">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
-      <div className="game-info">
-        <ol>{moves}</ol>
-      </div>
+      <div className="status">{status}</div>
+      <button className="restart-button" onClick={restartGame}>
+        Restart
+      </button>
     </div>
   );
 }
@@ -125,3 +118,4 @@ function calculateWinner(squares: Array<string | null>) {
   }
   return null;
 }
+
