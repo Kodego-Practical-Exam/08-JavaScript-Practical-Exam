@@ -25,3 +25,49 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+/* styles.css */
+.board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+}
+
+.status {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.board-row {
+  display: flex;
+}
+
+.square {
+  width: 70px;
+  height: 70px;
+  margin: 4px;
+  font-size: 32px;
+  text-align: center;
+  background-color: #fff;
+  border: 2px solid #999;
+  cursor: pointer;
+}
+
+.square:hover {
+  background-color: #f1f1f1;
+}
+
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.game-info {
+  margin-top: 20px;
+}
+
