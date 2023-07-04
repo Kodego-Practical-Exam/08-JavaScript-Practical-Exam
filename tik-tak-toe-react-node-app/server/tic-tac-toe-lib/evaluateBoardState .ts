@@ -26,4 +26,6 @@ function isMoveLegal(squares: Array<string | null>, move: number): boolean {
   return squares[move] === null;
 }
 
+
+
 export { calculateWinner, isBoardFull, isMoveLegal };

@@ -5,7 +5,7 @@ interface Square {
 }
 
 export default function App() {
-  const [squares, setSquares] = useState<Square[]>(Array(9).fill(null).map(() => ({ value: null })));
+  const [squares, setSquares] = useState<Square[]>(Array.from({ length: 9 }, () => ({ value: null })));
   const [winner, setWinner] = useState<string | null>(null);
   const [draw, setDraw] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -21,12 +21,13 @@ export default function App() {
     updatedSquares[index].value = 'X';
     setSquares(updatedSquares);
 
+    const updatedSquareValues = updatedSquares.map(square => square.value);
     const response = await fetch('/api/evaluate-board', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ squares: updatedSquares, move: index }),
+      body: JSON.stringify({ squares: updatedSquareValues, move: index }),
     });
 
     if (!response.ok) {
