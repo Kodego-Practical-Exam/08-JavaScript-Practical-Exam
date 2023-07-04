@@ -1,33 +1,96 @@
 import React, { useState } from 'react';
-import Board from './components/board';
 
-export default function App() {
-  const [currentSquares, setCurrentSquares] = useState<Array<string | null>>(Array(9).fill(null));
-  const oIsNext = currentSquares.filter((s) => s === null).length % 2 === 0;
+interface Square {
+  value: string | null;
+}
 
-  function handlePlay(nextSquares: Array<string | null>) {
-    setCurrentSquares(nextSquares);
-  }
+export default function AppTest() {
+  const [squares, setSquares] = useState<Square[]>(Array(9).fill({ value: null }));
+  const [winner, setWinner] = useState<string | null>(null);
+  const [draw, setDraw] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  function restartGame() {
-    setCurrentSquares(Array(9).fill(null));
-  }
+  const handleSquareClick = async (index: number) => {
+    if (squares[index].value || winner || draw || isLoading) {
+      return;
+    }
 
-  const winner = calculateWinner(currentSquares);
+    setIsLoading(true);
+
+    const updatedSquares = [...squares];
+    updatedSquares[index].value = 'X';
+    setSquares(updatedSquares);
+
+    const response = await fetch('http://localhost:3001/evaluate-board', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ squares: updatedSquares, move: index }),
+    });
+
+    if (!response.ok) {
+      const { error } = await response.json();
+      console.error(error);
+      setIsLoading(false);
+      return;
+    }
+
+    const data = await response.json();
+
+    if (data.winner) {
+      setWinner(data.winner);
+    } else if (data.draw) {
+      setDraw(true);
+    } else {
+      setSquares(data.nextMove);
+    }
+
+    setIsLoading(false);
+  };
+
+  const renderSquare = (index: number) => {
+    return (
+      <button className="square" onClick={() => handleSquareClick(index)}>
+        {squares[index].value}
+      </button>
+    );
+  };
+
+  const restartGame = () => {
+    setSquares(Array(9).fill({ value: null }));
+    setWinner(null);
+    setDraw(false);
+  };
+
   let status;
   if (winner) {
     status = 'Winner: ' + winner;
-  } else if (currentSquares.every((s) => s !== null)) {
+  } else if (draw) {
     status = 'Draw';
   } else {
-    status = 'Next player: ' + (oIsNext ? 'O' : 'X');
+    status = 'Next player: X';
   }
 
   return (
     <div className="game">
       <h1>Tic Tac Toe</h1>
       <div className="game-board">
-        <Board xIsNext={!oIsNext} squares={currentSquares} onPlay={handlePlay} />
+        <div className="board-row">
+          {renderSquare(0)}
+          {renderSquare(1)}
+          {renderSquare(2)}
+        </div>
+        <div className="board-row">
+          {renderSquare(3)}
+          {renderSquare(4)}
+          {renderSquare(5)}
+        </div>
+        <div className="board-row">
+          {renderSquare(6)}
+          {renderSquare(7)}
+          {renderSquare(8)}
+        </div>
       </div>
       <div className="status">{status}</div>
       <button className="restart-button" onClick={restartGame}>
@@ -35,24 +98,4 @@ export default function App() {
       </button>
     </div>
   );
-}
-
-function calculateWinner(squares: Array<string | null>) {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
-    }
-  }
-  return null;
 }

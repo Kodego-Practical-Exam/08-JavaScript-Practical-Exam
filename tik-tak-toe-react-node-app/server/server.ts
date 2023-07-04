@@ -1,8 +1,12 @@
 import express, { Request, Response } from 'express';
-import { calculateWinner, isBoardFull, isMoveLegal } from './tic-tac-toe-lib/boardEvaluator';
+import { calculateWinner, isBoardFull, isMoveLegal } from './tic-tac-toe-lib/evaluateBoardState ';
 
 const app = express();
 app.use(express.json());
+
+app.get('/', (req: Request, res: Response) => {
+  res.send('Server is running'); // Or any other response you want to send
+});
 
 app.post('/evaluate-board', (req: Request, res: Response) => {
   const { squares, move } = req.body;
@@ -33,7 +37,7 @@ app.post('/evaluate-board', (req: Request, res: Response) => {
   const emptySquares = squares.map((square, index) => (square === null ? index : null)).filter((index): index is number => index !== null);
   const computerMove = emptySquares[Math.floor(Math.random() * emptySquares.length)]!;
   squares[computerMove] = 'O';
-  
+
 
   const computerWinner = calculateWinner(squares);
 
@@ -48,6 +52,14 @@ app.post('/evaluate-board', (req: Request, res: Response) => {
   }
 
   res.json({ nextMove: squares });
+});
+
+// Set up CORS headers
+app.use((req: Request, res: Response, next: Function) => {
+  res.setHeader('Access-Control-Allow-Origin', '*'); // Allow all origins
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Allow the specified methods
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type'); // Allow the specified headers
+  next();
 });
 
 const port = 3001;
