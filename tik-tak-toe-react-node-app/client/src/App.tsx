@@ -21,7 +21,7 @@ export default function AppTest() {
     updatedSquares[index].value = 'X';
     setSquares(updatedSquares);
 
-    const response = await fetch('http://localhost:3001/evaluate-board', {
+    const response = await fetch('/api/evaluate-board', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -8,7 +8,7 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Server is running'); // Or any other response you want to send
 });
 
-app.post('/evaluate-board', (req: Request, res: Response) => {
+app.post('/api/evaluate-board', (req: Request, res: Response) => {
   const { squares, move } = req.body;
 
   if (!Array.isArray(squares) || squares.length !== 9 || !Number.isInteger(move) || move < 0 || move > 8) {

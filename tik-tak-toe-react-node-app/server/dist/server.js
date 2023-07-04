@@ -10,7 +10,7 @@ app.use(express_1.default.json());
 app.get('/', function (req, res) {
     res.send('Server is running'); // Or any other response you want to send
 });
-app.post('/evaluate-board', function (req, res) {
+app.post('/api/evaluate-board', function (req, res) {
     var _a = req.body, squares = _a.squares, move = _a.move;
     if (!Array.isArray(squares) || squares.length !== 9 || !Number.isInteger(move) || move < 0 || move > 8) {
         res.status(400).json({ error: 'Invalid request. The request should contain "squares" (an array of 9 elements) and "move" (an integer between 0 and 8).' });
