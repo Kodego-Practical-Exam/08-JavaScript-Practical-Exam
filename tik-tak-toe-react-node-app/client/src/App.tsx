@@ -4,8 +4,8 @@ interface Square {
   value: string | null;
 }
 
-export default function AppTest() {
-  const [squares, setSquares] = useState<Square[]>(Array(9).fill({ value: null }));
+export default function App() {
+  const [squares, setSquares] = useState<Square[]>(Array(9).fill(null).map(() => ({ value: null })));
   const [winner, setWinner] = useState<string | null>(null);
   const [draw, setDraw] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
