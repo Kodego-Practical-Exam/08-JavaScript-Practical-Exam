@@ -28,7 +28,7 @@ const App: React.FC = () => {
   const handleSquareClick = async (index: number) => {
     const clickedSquare = squares[index];
 
-    if (clickedSquare || winner || isLoading) {
+    if (clickedSquare?.value || winner || isLoading) {
       return;
     }
 
@@ -53,9 +53,7 @@ const App: React.FC = () => {
       const data = await response.json();
       setSquares(data.squares);
       setCurrentPlayer(data.currentPlayer);
-
-      // Check for a winner
-      // (Implement your logic here based on the response from the server)
+      setWinner(data.winner);
 
     } catch (error) {
       console.error('Error making move:', error);
@@ -64,18 +62,16 @@ const App: React.FC = () => {
     setIsLoading(false);
   };
 
+  const renderSquare = (index: number) => {
+    const square = squares[index];
+    const squareValue = square?.value || "";
 
-const renderSquare = (index: number) => {
-  const square = squares[index];
-  const squareValue = square?.value || "";
-
-  return (
-    <button className="square" onClick={() => handleSquareClick(index)}>
-      {squareValue}
-    </button>
-  );
-};
-
+    return (
+      <button className="square" onClick={() => handleSquareClick(index)}>
+        {squareValue}
+      </button>
+    );
+  };
 
   const resetGame = async () => {
     try {
