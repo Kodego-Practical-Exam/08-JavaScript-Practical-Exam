@@ -51,6 +51,7 @@ const App: React.FC = () => {
       }
 
       const data = await response.json();
+      console.log(data)
       setSquares(data.squares);
       setCurrentPlayer(data.currentPlayer);
       setWinner(data.winner);
