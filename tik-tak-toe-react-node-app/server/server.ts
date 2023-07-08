@@ -37,7 +37,7 @@ app.post('/api/reset', (req: Request, res: Response) => {
   squares = Array.from({ length: 9 }, () => null);
   currentPlayer = 'X';
 
-  res.json({ message: 'Game reset.',  data: `${squares}` });
+  res.json({ message: 'Game reset.' });
 });
 
 const port = 3001;
