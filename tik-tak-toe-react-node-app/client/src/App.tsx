@@ -67,6 +67,8 @@ const App: React.FC = () => {
     const square = squares[index];
     const squareValue = square?.value || "";
 
+    console.log('squareValue:', squareValue);
+
     return (
       <button className="square" onClick={() => handleSquareClick(index)}>
         {squareValue}
