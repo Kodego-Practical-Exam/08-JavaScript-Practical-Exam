@@ -64,7 +64,7 @@ const App: React.FC = () => {
   };
 
   const renderSquare = (index: number) => {
-    console.log('Squarevalue:', squares[index]?.value);
+    console.log(`Squarevalue${index}:`, squares[index]);
     const squareValue = squares[index];
 
 
