@@ -64,17 +64,17 @@ const App: React.FC = () => {
   };
 
   const renderSquare = (index: number) => {
-    const square = squares[index];
-    const squareValue = square?.value || "";
+    const squareValue = squares[index];
 
-    console.log('squareValue:', squareValue);
+    console.log('Squarevalue:', squareValue);
 
     return (
       <button className="square" onClick={() => handleSquareClick(index)}>
-        {squareValue}
+        {String(squareValue)}
       </button>
     );
   };
+
 
   const resetGame = async () => {
     try {
