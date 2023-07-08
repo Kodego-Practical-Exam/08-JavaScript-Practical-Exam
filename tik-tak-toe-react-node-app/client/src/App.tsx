@@ -64,9 +64,10 @@ const App: React.FC = () => {
   };
 
   const renderSquare = (index: number) => {
+    console.log('Squarevalue:', squares[index]?.value);
     const squareValue = squares[index];
 
-    console.log('Squarevalue:', squareValue);
+
 
     return (
       <button className="square" onClick={() => handleSquareClick(index)}>
