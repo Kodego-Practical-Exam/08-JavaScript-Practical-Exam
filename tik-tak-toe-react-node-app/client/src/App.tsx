@@ -90,10 +90,15 @@ const App: React.FC = () => {
 
   let status: string;
   if (winner) {
-    status = `Winner: ${winner}`;
+    if (winner === "draw") {
+      status = "Draw";
+    } else {
+      status = `Winner: ${winner}`;
+    }
   } else {
     status = `Current Player: ${currentPlayer}`;
   }
+  
 
   return (
     <div className="game">

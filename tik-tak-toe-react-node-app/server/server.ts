@@ -62,7 +62,7 @@ app.post('/api/move', (req: Request, res: Response) => {
   if (evaluationResult === 'X' || evaluationResult === 'O') {
     res.json({ squares, currentPlayer, winner: evaluationResult });
   } else if (evaluationResult === 'draw') {
-    res.json({ squares, currentPlayer, draw: true });
+    res.json({ squares, currentPlayer, winner: evaluationResult });
   } else {
     currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
     res.json({ squares, currentPlayer });

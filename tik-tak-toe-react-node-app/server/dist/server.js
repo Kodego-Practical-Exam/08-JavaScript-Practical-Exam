@@ -53,7 +53,7 @@ app.post('/api/move', function (req, res) {
         res.json({ squares: squares, currentPlayer: currentPlayer, winner: evaluationResult });
     }
     else if (evaluationResult === 'draw') {
-        res.json({ squares: squares, currentPlayer: currentPlayer, draw: true });
+        res.json({ squares: squares, currentPlayer: currentPlayer, winner: evaluationResult });
     }
     else {
         currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
