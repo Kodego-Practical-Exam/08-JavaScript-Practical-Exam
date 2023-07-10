@@ -67,11 +67,9 @@ const App: React.FC = () => {
     console.log(`Squarevalue${index}:`, squares[index]);
     const squareValue = squares[index] || "";
 
-
-
     return (
       <button className="square" onClick={() => handleSquareClick(index)}>
-        {typeof squareValue === "object" ? "" : String(squareValue)}
+       {typeof squareValue === "object" ? "" : String(squareValue)}
       </button>
     );
   };
@@ -81,13 +79,14 @@ const App: React.FC = () => {
     try {
       const response = await fetch('/api/reset', { method: 'POST' });
       const data = await response.json();
-      setSquares(Array.from({ length: 9 }, () => ({ value: null })));
-      setCurrentPlayer('X');
+      setSquares(data.squares.map((value: string | null) => ({ value })));
+      setCurrentPlayer(data.currentPlayer);
       setWinner(null);
     } catch (error) {
       console.error('Error resetting game:', error);
     }
   };
+
 
   return (
     <div className="game">
