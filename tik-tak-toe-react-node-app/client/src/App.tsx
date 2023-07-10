@@ -71,7 +71,7 @@ const App: React.FC = () => {
 
     return (
       <button className="square" onClick={() => handleSquareClick(index)}>
-        {String(squareValue)}
+        {typeof squareValue === "object" ? "" : String(squareValue)}
       </button>
     );
   };
@@ -88,7 +88,6 @@ const App: React.FC = () => {
       console.error('Error resetting game:', error);
     }
   };
-
 
   return (
     <div className="game">
