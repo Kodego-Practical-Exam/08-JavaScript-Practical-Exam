@@ -10,8 +10,36 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Server is running');
 });
 
+function evaluateBoard(board: Array<string | null>) {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+      return board[a]; // Return the winning player
+    }
+  }
+
+  if (board.every((square) => square !== null)) {
+    return 'draw'; // Return 'draw' if the board is full and no winner
+  }
+
+  return null; // Return null if the game is still in progress
+}
+
 app.get('/api/board', (req: Request, res: Response) => {
-  res.json({ squares, currentPlayer });
+  const evaluationResult = evaluateBoard(squares);
+
+  res.json({ squares, currentPlayer, winner: evaluationResult });
 });
 
 app.post('/api/move', (req: Request, res: Response) => {
@@ -28,18 +56,25 @@ app.post('/api/move', (req: Request, res: Response) => {
   }
 
   squares[index] = currentPlayer;
-  currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
 
-  res.json({ squares, currentPlayer });
+  const evaluationResult = evaluateBoard(squares);
+
+  if (evaluationResult === 'X' || evaluationResult === 'O') {
+    res.json({ squares, currentPlayer, winner: evaluationResult });
+  } else if (evaluationResult === 'draw') {
+    res.json({ squares, currentPlayer, draw: true });
+  } else {
+    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+    res.json({ squares, currentPlayer });
+  }
 });
 
 app.post('/api/reset', (req: Request, res: Response) => {
   squares = Array.from({ length: 9 }, () => null);
   currentPlayer = 'X';
 
-  res.json({ squares, currentPlayer });
+  res.json({ message: 'Game reset.' });
 });
-
 
 const port = 3001;
 app.listen(port, () => {

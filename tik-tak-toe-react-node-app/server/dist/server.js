@@ -8,31 +8,34 @@ var app = (0, express_1.default)();
 app.use(express_1.default.json());
 var squares = Array.from({ length: 9 }, function () { return null; });
 var currentPlayer = 'X';
-var winningCombinations = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-];
-var checkWinner = function (player) {
-    for (var _i = 0, winningCombinations_1 = winningCombinations; _i < winningCombinations_1.length; _i++) {
-        var combination = winningCombinations_1[_i];
-        var a = combination[0], b = combination[1], c = combination[2];
-        if (squares[a] === player && squares[b] === player && squares[c] === player) {
-            return true;
-        }
-    }
-    return false;
-};
 app.get('/', function (req, res) {
     res.send('Server is running');
 });
+function evaluateBoard(board) {
+    var lines = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
+    ];
+    for (var i = 0; i < lines.length; i++) {
+        var _a = lines[i], a = _a[0], b = _a[1], c = _a[2];
+        if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+            return board[a]; // Return the winning player
+        }
+    }
+    if (board.every(function (square) { return square !== null; })) {
+        return 'draw'; // Return 'draw' if the board is full and no winner
+    }
+    return null; // Return null if the game is still in progress
+}
 app.get('/api/board', function (req, res) {
-    res.json({ squares: squares, currentPlayer: currentPlayer });
+    var evaluationResult = evaluateBoard(squares);
+    res.json({ squares: squares, currentPlayer: currentPlayer, winner: evaluationResult });
 });
 app.post('/api/move', function (req, res) {
     var index = req.body.index;
@@ -45,15 +48,22 @@ app.post('/api/move', function (req, res) {
         return;
     }
     squares[index] = currentPlayer;
-    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-    var isWinner = checkWinner(currentPlayer);
-    var winner = isWinner ? currentPlayer : null;
-    res.json({ squares: squares, currentPlayer: currentPlayer, winner: winner });
+    var evaluationResult = evaluateBoard(squares);
+    if (evaluationResult === 'X' || evaluationResult === 'O') {
+        res.json({ squares: squares, currentPlayer: currentPlayer, winner: evaluationResult });
+    }
+    else if (evaluationResult === 'draw') {
+        res.json({ squares: squares, currentPlayer: currentPlayer, draw: true });
+    }
+    else {
+        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        res.json({ squares: squares, currentPlayer: currentPlayer });
+    }
 });
 app.post('/api/reset', function (req, res) {
     squares = Array.from({ length: 9 }, function () { return null; });
     currentPlayer = 'X';
-    res.json({ squares: squares, currentPlayer: currentPlayer });
+    res.json({ message: 'Game reset.' });
 });
 var port = 3001;
 app.listen(port, function () {
