@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import { evaluateBoardState } from './evaluateBoardState';
 
 const app = express();
 app.use(express.json());
@@ -10,34 +11,9 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Server is running');
 });
 
-function evaluateBoard(board: Array<string | null>) {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-      return board[a]; // Return the winning player
-    }
-  }
-
-  if (board.every((square) => square !== null)) {
-    return 'draw'; // Return 'draw' if the board is full and no winner
-  }
-
-  return null; // Return null if the game is still in progress
-}
 
 app.get('/api/board', (req: Request, res: Response) => {
-  const evaluationResult = evaluateBoard(squares);
+  const evaluationResult = evaluateBoardState(squares);
 
   res.json({ squares, currentPlayer, winner: evaluationResult });
 });
@@ -57,7 +33,7 @@ app.post('/api/move', (req: Request, res: Response) => {
 
   squares[index] = currentPlayer;
 
-  const evaluationResult = evaluateBoard(squares);
+  const evaluationResult = evaluateBoardState(squares);
 
   if (evaluationResult === 'X' || evaluationResult === 'O') {
     res.json({ squares, currentPlayer, winner: evaluationResult });
