@@ -8,6 +8,26 @@ var app = (0, express_1.default)();
 app.use(express_1.default.json());
 var squares = Array.from({ length: 9 }, function () { return null; });
 var currentPlayer = 'X';
+var winningCombinations = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+];
+var checkWinner = function (player) {
+    for (var _i = 0, winningCombinations_1 = winningCombinations; _i < winningCombinations_1.length; _i++) {
+        var combination = winningCombinations_1[_i];
+        var a = combination[0], b = combination[1], c = combination[2];
+        if (squares[a] === player && squares[b] === player && squares[c] === player) {
+            return true;
+        }
+    }
+    return false;
+};
 app.get('/', function (req, res) {
     res.send('Server is running');
 });
@@ -26,7 +46,9 @@ app.post('/api/move', function (req, res) {
     }
     squares[index] = currentPlayer;
     currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-    res.json({ squares: squares, currentPlayer: currentPlayer });
+    var isWinner = checkWinner(currentPlayer);
+    var winner = isWinner ? currentPlayer : null;
+    res.json({ squares: squares, currentPlayer: currentPlayer, winner: winner });
 });
 app.post('/api/reset', function (req, res) {
     squares = Array.from({ length: 9 }, function () { return null; });
