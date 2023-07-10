@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 interface Square {
   value: string | null;
-
 }
 
 const App: React.FC = () => {
@@ -15,6 +14,7 @@ const App: React.FC = () => {
     fetchBoard();
   }, []);
 
+ // Fetch the initial board state from the server
   const fetchBoard = async () => {
     try {
       const response = await fetch('/api/board');
@@ -26,6 +26,7 @@ const App: React.FC = () => {
     }
   };
 
+ // Handle the click event on a square 
   const handleSquareClick = async (index: number) => {
     const clickedSquare = squares[index];
 
@@ -64,6 +65,7 @@ const App: React.FC = () => {
     setIsLoading(false);
   };
 
+ // Render a square with its value
   const renderSquare = (index: number) => {
     console.log(`Squarevalue${index}:`, squares[index]);
     const squareValue = squares[index] || "";
@@ -75,7 +77,7 @@ const App: React.FC = () => {
     );
   };
 
-
+// Reset the game
   const resetGame = async () => {
     try {
       const response = await fetch('/api/reset', { method: 'POST' });
@@ -88,6 +90,7 @@ const App: React.FC = () => {
     }
   };
 
+// Determine the game status
   let status: string;
   if (winner) {
     if (winner === "draw") {
@@ -99,7 +102,7 @@ const App: React.FC = () => {
     status = `Current Player: ${currentPlayer}`;
   }
   
-
+// Renders the Tic-Tac-Toe Game Board
   return (
     <div className="game">
       <h1>Tic Tac Toe</h1>
