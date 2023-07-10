@@ -31,7 +31,7 @@ app.post('/api/move', function (req, res) {
 app.post('/api/reset', function (req, res) {
     squares = Array.from({ length: 9 }, function () { return null; });
     currentPlayer = 'X';
-    res.json({ message: 'Game reset.' });
+    res.json({ squares: squares, currentPlayer: currentPlayer });
 });
 var port = 3001;
 app.listen(port, function () {
