@@ -42,7 +42,7 @@ body {
 }
 
 .square:hover {
-    border: 4px solid rgb(214, 43, 43);
+    border: 4px solid #3182ce;
 }
 
 .game {
