@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 interface Square {
   value: string | null;
+
 }
 
 const App: React.FC = () => {
@@ -69,7 +70,7 @@ const App: React.FC = () => {
 
     return (
       <button className="square" onClick={() => handleSquareClick(index)}>
-       {typeof squareValue === "object" ? "" : String(squareValue)}
+        {typeof squareValue === "object" ? "" : String(squareValue)}
       </button>
     );
   };
@@ -81,12 +82,18 @@ const App: React.FC = () => {
       const data = await response.json();
       setSquares(data.squares.map((value: string | null) => ({ value })));
       setCurrentPlayer(data.currentPlayer);
-      setWinner(null);
+      setWinner(data.winner);
     } catch (error) {
       console.error('Error resetting game:', error);
     }
   };
 
+  let status: string;
+  if (winner) {
+    status = `Winner: ${winner}`;
+  } else {
+    status = `Current Player: ${currentPlayer}`;
+  }
 
   return (
     <div className="game">
@@ -108,8 +115,8 @@ const App: React.FC = () => {
           {renderSquare(8)}
         </div>
       </div>
-      <div className="status">Current Player: {currentPlayer}</div>
-      <button className="reset-button" onClick={resetGame}>
+      <div className="status">{status}</div>
+      <button className="restart-button" onClick={resetGame}>
         Reset Game
       </button>
     </div>
