@@ -12,12 +12,14 @@ function evaluateBoardState(board) {
         [0, 4, 8],
         [2, 4, 6],
     ];
+    // Check each line to find a winning player
     for (var i = 0; i < lines.length; i++) {
         var _a = lines[i], a = _a[0], b = _a[1], c = _a[2];
         if (board[a] && board[a] === board[b] && board[a] === board[c]) {
             return board[a]; // Return the winning player
         }
     }
+    // Check if the board is draw
     if (board.every(function (square) { return square !== null; })) {
         return 'draw'; // Return 'draw' if the board is full and no winner
     }
